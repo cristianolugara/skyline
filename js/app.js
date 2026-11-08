@@ -149,6 +149,8 @@ async function mostraIsometrica() {
   for (const b of document.querySelectorAll('[data-vista]')) {
     b.setAttribute('aria-pressed', String(b.dataset.vista === vistaIso));
   }
+  // La frontale è larga e bassa: nel riquadro alto dell'isometrica resterebbe un francobollo.
+  $('#visore-iso').classList.toggle('frontale', vistaIso === 'isometrica-frontale');
   const avviso = $('#messaggio-iso');
   avviso.textContent = zoneDi(vistaIso)
     ? 'Tocca un monumento per il suo numero. Doppio tocco per ingrandirlo.'
@@ -171,7 +173,7 @@ for (const b of document.querySelectorAll('[data-vista]')) {
   });
 }
 
-// La vista frontale la manda Alberto più avanti: il pulsante si accende da solo quando il file c'è.
+// Il pulsante della vista frontale si accende solo se il file c'è: una città nuova può non averla.
 {
   const prova = new Image();
   prova.onload = () => {

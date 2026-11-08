@@ -95,6 +95,7 @@ button:focus-visible, .pulsante:focus-visible, input:focus-visible {
 /* Più alto dello skyline adattato: lo spazio in più serve quando si ingrandisce. */
 .riquadro-gioco { height: clamp(220px, 68vw, 560px); max-height: 52vh; }
 .riquadro-iso { height: clamp(320px, 68vh, 860px); margin-top: 12px; background: var(--sfondo-iso); }
+.riquadro-iso.frontale { height: clamp(220px, 46vw, 620px); }
 
 @media (min-width: 720px) {
   .riquadro { margin-inline: 0; border: 1px solid var(--bordo); border-radius: var(--raggio); }

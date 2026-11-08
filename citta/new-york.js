@@ -41,8 +41,8 @@ export default {
     aiuto: { file: 'img/new-york/aiuto.webp', zone: 'disegni' },
     risolta: { file: 'img/new-york/risolta.webp', zone: 'risolta' },
     isometrica: { file: 'img/new-york/isometrica.webp', zone: 'isometrica' },
-    // Arriva da Alberto: finché il file manca il pulsante resta spento. Quando arriva vanno
-    // rigenerati i profili e aggiunti qui sotto i confini del foglio 'isometrica-frontale'.
+    // Fatta con Gemini partendo dall'isometrica (08/11/2026). Se cambia, si rigenerano i profili
+    // e si ricontrollano i confini del foglio 'isometrica-frontale'.
     'isometrica-frontale': { file: 'img/new-york/isometrica-frontale.webp', zone: 'isometrica-frontale' },
   },
 
@@ -73,6 +73,13 @@ export default {
         [[2305, 605], [2332, 620]],
         2752,
       ],
+    },
+    // Nella frontale gli edifici non si coprono: bastano confini dritti. Il palazzetto accanto
+    // al ponte va al ponte e la casetta tra Chrysler ed Empire all'Empire, come nell'isometrica.
+    'isometrica-frontale': {
+      profilo: profili['isometrica-frontale'],
+      pezzi: RENDERING,
+      confini: [0, 355, 885, 1185, 1345, 1731, 2000, 2166, 2417, 2640, 3168],
     },
   },
 };
