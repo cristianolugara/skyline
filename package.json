@@ -1,0 +1,9 @@
+{
+  "name": "skyline",
+  "private": true,
+  "type": "module",
+  "description": "Gioco: riconosci la città dallo skyline. Sito statico, nessuna dipendenza.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

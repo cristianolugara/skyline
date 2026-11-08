@@ -1,0 +1,6 @@
+__pycache__/
+.playwright-mcp/
+
+# Note interne con dati personali di Alberto: il repository è pubblico (GitHub Pages).
+CLAUDE.md
+GEMINI.md

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Skyline</title>
+  <meta name="description" content="Riconosci la città dal suo skyline.">
+  <meta name="theme-color" content="#f4f2ed">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/stile.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <main>
+    <section id="gioco" class="schermata">
+      <header class="testata">
+        <h1>Skyline</h1>
+        <p class="sottotitolo">Riconosci la città dal suo profilo</p>
+      </header>
+
+      <div id="visore-gioco" class="riquadro riquadro-gioco" aria-label="Lo skyline da riconoscere"></div>
+      <p id="messaggio" class="messaggio" aria-live="polite">Pizzica o usa la rotella per ingrandire.</p>
+
+      <form id="risposta" class="risposta" autocomplete="off">
+        <label for="campo" class="nascosto">Che città è?</label>
+        <input id="campo" name="citta" type="text" placeholder="Che città è?"
+               enterkeyhint="send" autocapitalize="words" autocorrect="off" spellcheck="false">
+        <button type="submit" class="primario">Rispondi</button>
+      </form>
+
+      <div class="azioni">
+        <button id="aiuto" type="button">Aiuto</button>
+        <a id="vai-isometrica" class="pulsante primario" href="#isometrica" hidden>Vedi l’isometrica</a>
+        <button id="ricomincia" type="button" hidden>Ricomincia</button>
+      </div>
+
+      <section class="prove" aria-labelledby="titolo-prove">
+        <h2 id="titolo-prove">Per le prove</h2>
+        <div class="interruttore" role="group" aria-label="Immagine di partenza">
+          <span class="etichetta">Partenza</span>
+          <button type="button" data-variante="linea" aria-pressed="true">Solo linea</button>
+          <button type="button" data-variante="riempita" aria-pressed="false">Linea riempita</button>
+        </div>
+        <div class="azioni">
+          <button id="soluzione" type="button">Mostra soluzione</button>
+          <a class="pulsante" href="#isometrica">Apri l’isometrica</a>
+        </div>
+      </section>
+    </section>
+
+    <section id="isometrica" class="schermata" hidden>
+      <header class="testata">
+        <a href="#" class="indietro">← Torna allo skyline</a>
+        <h1 id="titolo-isometrica">Isometrica</h1>
+      </header>
+
+      <div class="interruttore" role="group" aria-label="Vista">
+        <button type="button" data-vista="isometrica" aria-pressed="true">Isometrica</button>
+        <button type="button" data-vista="isometrica-frontale" aria-pressed="false" disabled
+                title="L’immagine non c’è ancora">Isometrica frontale <small>(in arrivo)</small></button>
+      </div>
+
+      <div id="visore-iso" class="riquadro riquadro-iso" aria-label="Scena isometrica"></div>
+      <p id="messaggio-iso" class="messaggio" aria-live="polite">Tocca un monumento per il suo numero. Doppio tocco per ingrandirlo.</p>
+    </section>
+  </main>
+</body>
+</html>

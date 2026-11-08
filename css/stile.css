@@ -1,0 +1,189 @@
+/* Ossatura: grafica sobria, pensata prima per il telefono. Il design vero verrà dopo. */
+
+:root {
+  --fondo: #f4f2ed;
+  --carta: #ffffff;
+  --inchiostro: #1d1d1b;
+  --tenue: #6b6a65;
+  --bordo: #d9d6ce;
+  --scuro: #1d1d1b;
+  --su-scuro: #ffffff;
+  --errore: #b3261e;
+  --sfondo-iso: #f9d2b9; /* il pesca della scena isometrica, così i margini non si vedono */
+  --raggio: 10px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--inchiostro);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Niente zoom del browser col doppio tocco sui pulsanti: sul telefono ritarda i clic. */
+  touch-action: manipulation;
+}
+
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 16px 40px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+}
+
+[hidden] { display: none !important; }
+
+.nascosto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.testata { margin: 4px 0 12px; }
+.testata h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.02em; }
+.sottotitolo { margin: 0; color: var(--tenue); font-size: 0.95rem; }
+.indietro { display: inline-block; margin-bottom: 4px; color: var(--tenue); text-decoration: none; }
+.indietro:hover { color: var(--inchiostro); }
+
+/* --- Pulsanti --------------------------------------------------------------------------------- */
+
+button, .pulsante {
+  font: inherit;
+  min-height: 44px; /* il minimo comodo per un dito */
+  padding: 0 16px;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--carta);
+  color: var(--inchiostro);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+}
+button:hover:not(:disabled), .pulsante:hover { border-color: var(--inchiostro); }
+button:disabled { opacity: 0.45; cursor: default; }
+button:focus-visible, .pulsante:focus-visible, input:focus-visible {
+  outline: 2px solid var(--inchiostro);
+  outline-offset: 2px;
+}
+.primario { background: var(--scuro); color: var(--su-scuro); border-color: var(--scuro); }
+
+.azioni { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+.interruttore {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.interruttore .etichetta { color: var(--tenue); margin-right: 4px; }
+.interruttore button[aria-pressed="true"] {
+  background: var(--scuro); color: var(--su-scuro); border-color: var(--scuro);
+}
+.interruttore small { font-size: 0.8em; opacity: 0.8; }
+
+/* --- Riquadri con le immagini ------------------------------------------------------------------ */
+
+.riquadro {
+  /* Sul telefono a tutta larghezza: lo skyline è largo e ogni pixel conta. */
+  margin: 0 -16px;
+  background: var(--carta);
+  border-block: 1px solid var(--bordo);
+}
+/* Più alto dello skyline adattato: lo spazio in più serve quando si ingrandisce. */
+.riquadro-gioco { height: clamp(220px, 68vw, 560px); max-height: 52vh; }
+.riquadro-iso { height: clamp(320px, 68vh, 860px); margin-top: 12px; background: var(--sfondo-iso); }
+
+@media (min-width: 720px) {
+  .riquadro { margin-inline: 0; border: 1px solid var(--bordo); border-radius: var(--raggio); }
+}
+
+.visore {
+  position: relative;
+  overflow: hidden;
+  touch-action: none; /* pinch e trascinamento li gestisce il visore, non la pagina */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  cursor: grab;
+}
+.visore:active { cursor: grabbing; }
+.visore-immagini, .visore-immagini img { position: absolute; left: 0; top: 0; }
+.visore-immagini img { max-width: none; transform-origin: 0 0; -webkit-user-drag: none; }
+
+.visore-intera {
+  position: absolute; right: 10px; bottom: 10px;
+  min-height: 36px; padding: 0 12px; font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Il fumetto col numero del monumento: la punta indica il punto toccato. */
+.tag {
+  position: absolute;
+  left: 0; top: 0;
+  translate: -50% calc(-100% - 12px);
+  transform-origin: 50% 100%;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--scuro);
+  color: var(--su-scuro);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.tag::after {
+  content: "";
+  position: absolute; left: 50%; bottom: -7px;
+  translate: -50% 0;
+  border: 7px solid transparent; border-bottom: 0;
+  border-top-color: var(--scuro);
+}
+.tag.sotto { translate: -50% 12px; transform-origin: 50% 0; }
+.tag.sotto::after { bottom: auto; top: -7px; border: 7px solid transparent; border-top: 0; border-bottom-color: var(--scuro); }
+.tag.compare { animation: compare 160ms ease-out; }
+@keyframes compare { from { scale: 0.6; opacity: 0; } to { scale: 1; opacity: 1; } }
+
+/* --- Risposta ----------------------------------------------------------------------------------- */
+
+.messaggio { margin: 10px 0 0; min-height: 1.45em; color: var(--tenue); }
+
+.risposta { display: flex; gap: 8px; margin-top: 10px; }
+.risposta input {
+  flex: 1; min-width: 0;
+  font: inherit; font-size: 1.05rem; /* sotto i 16px iOS ingrandisce la pagina quando si scrive */
+  min-height: 48px; padding: 0 14px;
+  border: 1px solid var(--bordo); border-radius: var(--raggio);
+  background: var(--carta); color: var(--inchiostro);
+}
+.risposta button { min-height: 48px; }
+.risposta.scuoti { animation: scuoti 380ms ease; }
+.risposta.scuoti input { border-color: var(--errore); }
+@keyframes scuoti {
+  0%, 100% { translate: 0; }
+  20% { translate: -9px; }
+  40% { translate: 8px; }
+  60% { translate: -6px; }
+  80% { translate: 3px; }
+}
+
+/* --- Strumenti per le prove: separati, perché nel gioco vero non ci saranno --------------------- */
+
+.prove {
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--bordo);
+}
+.prove h2 {
+  margin: 0 0 10px; font-size: 0.8rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--tenue);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag.compare, .risposta.scuoti { animation: none; }
+}
